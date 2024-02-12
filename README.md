@@ -11,7 +11,8 @@ This is a calculator that performs addition, subtraction, multiplication, and di
 
 ## Additional Features
 
-C: Clear all the screen
-CE: Undo the last entry
+Backspace button: If you entered an incorrect value or want to modify your input, pressing the backspace button allows you to delete the last character.
+
+Clear button: Pressing the clear button will reset all fields, allowing you to start a new calculation.
 
 With a simple and user-friendly interface, this calculator will be your reliable companion for performing basic mathematical operations.
