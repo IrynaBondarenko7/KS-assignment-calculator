@@ -47,12 +47,19 @@ function showOnDisplay(event) {
   ) {
     return;
   }
+  if (displayValue.length >= 22) {
+    return;
+  }
   displayValue += buttonValue;
   ref.displayBtn.textContent = displayValue;
 }
 
 function onKeyBoardPress(event) {
   let keyBordValue = "";
+
+  if (displayValue.length >= 22) {
+    return;
+  }
 
   switch (event.code) {
     case "Digit1": {
