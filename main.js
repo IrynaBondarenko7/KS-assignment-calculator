@@ -149,8 +149,13 @@ function onKeyBoardPress(event) {
   }
 }
 function inputDecimal(){
-   ref.decimalBtn.disabled = true;
+  ref.decimalBtn.disabled = true;
+  ref.decimalBtn.classList.add('disabled-hover');
+  
+
   }
+ 
+
  
   function deleteLastNumber() {
     displayValue = displayValue.slice(0, -1);

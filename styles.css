@@ -60,3 +60,10 @@ button{
     background-color: #a3c9e7;
     color:white;
 }
+#decimal.disabled-hover:hover {
+    pointer-events: none;
+    background-color: #6c9cb6;
+    opacity: 0.4;
+    color:#6c9cb6;
+ 
+  }
