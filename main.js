@@ -1,20 +1,20 @@
 console.log("welcome to the calculator");
 
 // Functions to perform basic arithmetic operation
-function add(num1,num2){
-  return num1+num2;
+function add(num1, num2) {
+  return num1 + num2;
 }
-function subtract(num1,num2){
-  return num1-num2;
+function subtract(num1, num2) {
+  return num1 - num2;
 }
-function multiply(num1,num2){
-  return num1*num2;
+function multiply(num1, num2) {
+  return num1 * num2;
 }
-function divide(num1,num2){
-  if(num2===0){
-      return "Error"
+function divide(num1, num2) {
+  if (num2 === 0) {
+    return "Error";
   }
-  return num1/num2; 
+  return num1 / num2;
 }
 
 const ref = {
@@ -37,6 +37,7 @@ ref.deleteBtn.addEventListener("click", deleteLastNumber);
 ref.decimalBtn.addEventListener("click", inputDecimal);
 ref.clearBtn.addEventListener("click", displayClear);
 document.addEventListener("keydown", onKeyBoardPress);
+ref.clearBtn.addEventListener("click", clearDisplay);
 
 // Function to perform operation based on operator and two numbers
 function operate(operator, num1, num2) {
@@ -64,7 +65,9 @@ function showOnDisplay(event) {
     buttonValue === "+" ||
     buttonValue === "/" ||
     buttonValue === "*" ||
-    buttonValue === "="
+    buttonValue === "=" ||
+    event.target.innerText === "AC" ||
+    event.target.innerText === "DEL"
   ) {
     return;
   }
@@ -154,10 +157,7 @@ function displayClear(){
  
 }
 
-function deleteLastNumber(){
-  displayValue = displayValue.slice(0,-1);
+function deleteLastNumber() {
+  displayValue = displayValue.slice(0, -1);
   ref.displayBtn.textContent = displayValue;
-  if(!displayValue.includes('.')){
- ref.decimalBtn.disabled = false;
-  }
 }
