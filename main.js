@@ -14,7 +14,7 @@ function divide(num1,num2){
   if(num2===0){
       return "Error"
   }
-  return num1/num2;
+  return num1/num2; 
 }
 
 const ref = {
@@ -32,6 +32,7 @@ const ref = {
 let displayValue = ""; //string
 
 ref.buttons.addEventListener("click", showOnDisplay);
+ref.deleteBtn.addEventListener("click", deleteLastNumber)
 document.addEventListener("keydown", onKeyBoardPress);
 
 // Function to perform operation based on operator and two numbers
@@ -140,4 +141,9 @@ function onKeyBoardPress(event) {
       break;
     }
   }
+}
+
+function deleteLastNumber(){
+  displayValue = displayValue.slice(0,-1);
+  ref.displayBtn.textContent = displayValue;
 }
