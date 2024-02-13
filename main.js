@@ -152,12 +152,19 @@ function inputDecimal(){
    ref.decimalBtn.disabled = true;
   }
  
-function displayClear(){
-  ref.decimalBtn.disabled = false;
- 
-}
-
-function deleteLastNumber() {
-  displayValue = displayValue.slice(0, -1);
-  ref.displayBtn.textContent = displayValue;
-}
+  function deleteLastNumber() {
+    displayValue = displayValue.slice(0, -1);
+    ref.displayBtn.textContent = displayValue;
+    if (displayValue === "") {
+      ref.displayBtn.textContent = "0";
+    }
+    if(!displayValue.includes('.')){
+      ref.decimalBtn.disabled = false;
+       }
+  }
+  
+  function clearDisplay() {
+    displayValue = "";
+    ref.displayBtn.textContent = "0";
+    ref.decimalBtn.disabled = false;
+  }
