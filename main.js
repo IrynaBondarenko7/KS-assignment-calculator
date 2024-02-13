@@ -35,8 +35,7 @@ let displayValue = ""; //string
 ref.buttons.addEventListener("click", showOnDisplay);
 ref.deleteBtn.addEventListener("click", deleteLastNumber);
 ref.decimalBtn.addEventListener("click", inputDecimal);
-ref.clearBtn.addEventListener("click", displayClear);
-document.addEventListener("keydown", onKeyBoardPress);
+document.addEventListener("keydown", keyboardControl);
 ref.clearBtn.addEventListener("click", clearDisplay);
 
 // Function to perform operation based on operator and two numbers
@@ -148,28 +147,34 @@ function onKeyBoardPress(event) {
     }
   }
 }
-function inputDecimal(){
+function inputDecimal() {
   ref.decimalBtn.disabled = true;
-  ref.decimalBtn.classList.add('disabled-hover');
-  
+}
 
-  }
- 
-
- 
-  function deleteLastNumber() {
-    displayValue = displayValue.slice(0, -1);
-    ref.displayBtn.textContent = displayValue;
-    if (displayValue === "") {
-      ref.displayBtn.textContent = "0";
-    }
-    if(!displayValue.includes('.')){
-      ref.decimalBtn.disabled = false;
-       }
-  }
-  
-  function clearDisplay() {
-    displayValue = "";
+function deleteLastNumber() {
+  displayValue = displayValue.slice(0, -1);
+  ref.displayBtn.textContent = displayValue;
+  if (displayValue === "") {
     ref.displayBtn.textContent = "0";
+  }
+  if (!displayValue.includes(".")) {
     ref.decimalBtn.disabled = false;
   }
+}
+
+function clearDisplay() {
+  displayValue = "";
+  ref.displayBtn.textContent = "0";
+  ref.decimalBtn.disabled = false;
+}
+
+function backspaceBtnControl(event) {
+  if (event.code === "Backspace") {
+    deleteLastNumber();
+  }
+}
+
+function keyboardControl(event) {
+  onKeyBoardPress(event);
+  backspaceBtnControl(event);
+}
