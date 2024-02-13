@@ -27,12 +27,15 @@ const ref = {
   equalsBtn: document.querySelector("#equals"),
   multiplyBtn: document.querySelector("#multiply"),
   buttons: document.querySelector("#buttons"),
+  decimalBtn: document.querySelector("#decimal"),
 };
 
 let displayValue = ""; //string
 
 ref.buttons.addEventListener("click", showOnDisplay);
-ref.deleteBtn.addEventListener("click", deleteLastNumber)
+ref.deleteBtn.addEventListener("click", deleteLastNumber);
+ref.decimalBtn.addEventListener("click", inputDecimal);
+ref.clearBtn.addEventListener("click", displayClear);
 document.addEventListener("keydown", onKeyBoardPress);
 
 // Function to perform operation based on operator and two numbers
@@ -142,8 +145,19 @@ function onKeyBoardPress(event) {
     }
   }
 }
+function inputDecimal(){
+   ref.decimalBtn.disabled = true;
+  }
+ 
+function displayClear(){
+  ref.decimalBtn.disabled = false;
+ 
+}
 
 function deleteLastNumber(){
   displayValue = displayValue.slice(0,-1);
   ref.displayBtn.textContent = displayValue;
+  if(!displayValue.includes('.')){
+ ref.decimalBtn.disabled = false;
+  }
 }
