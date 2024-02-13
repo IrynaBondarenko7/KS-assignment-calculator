@@ -149,7 +149,7 @@ function onKeyBoardPress(event) {
 }
 function inputDecimal() {
   ref.decimalBtn.disabled = true;
-  ref.decimalBtn.classList.add('disabled-hover');
+  ref.decimalBtn.classList.add("disabled-hover");
 }
 
 function deleteLastNumber() {
@@ -160,6 +160,7 @@ function deleteLastNumber() {
   }
   if (!displayValue.includes(".")) {
     ref.decimalBtn.disabled = false;
+    ref.decimalBtn.classList.remove("disabled-hover");
   }
 }
 
@@ -167,11 +168,13 @@ function clearDisplay() {
   displayValue = "";
   ref.displayBtn.textContent = "0";
   ref.decimalBtn.disabled = false;
+  ref.decimalBtn.classList.remove("disabled-hover");
 }
 
 function backspaceBtnControl(event) {
   if (event.code === "Backspace") {
     deleteLastNumber();
+    ref.decimalBtn.classList.remove("disabled-hover");
   }
 }
 
