@@ -30,7 +30,7 @@ const ref = {
   decimalBtn: document.querySelector("#decimal"),
 };
 
-let displayValue = ""; //string
+let displayValue = "";
 let privousValue = null;
 let currentValue = null;
 let operationValue = "";
@@ -127,68 +127,31 @@ function onKeyBoardPress(event) {
   }
 
   switch (event.code) {
-    case "Digit1": {
-      keyBordValue = "1";
-      displayValue += keyBordValue;
-      ref.displayBtn.textContent = displayValue;
-      break;
-    }
-    case "Digit2": {
-      keyBordValue = "2";
-      displayValue += keyBordValue;
-      ref.displayBtn.textContent = displayValue;
-      break;
-    }
-    case "Digit3": {
-      keyBordValue = "3";
-      displayValue += keyBordValue;
-      ref.displayBtn.textContent = displayValue;
-      break;
-    }
-    case "Digit4": {
-      keyBordValue = "4";
-      displayValue += keyBordValue;
-      ref.displayBtn.textContent = displayValue;
-      break;
-    }
-    case "Digit5": {
-      keyBordValue = "5";
-      displayValue += keyBordValue;
-      ref.displayBtn.textContent = displayValue;
-      break;
-    }
-    case "Digit6": {
-      keyBordValue = "6";
-      displayValue += keyBordValue;
-      ref.displayBtn.textContent = displayValue;
-      break;
-    }
-    case "Digit7": {
-      keyBordValue = "7";
+    case "Digit1":
+    case "Digit2":
+    case "Digit3":
+    case "Digit4":
+    case "Digit5":
+    case "Digit6":
+    case "Digit7":
+    case "Digit9":
+    case "Digit0": {
+      keyBordValue = event.key;
       displayValue += keyBordValue;
       ref.displayBtn.textContent = displayValue;
       break;
     }
     case "Digit8": {
-      keyBordValue = "8";
-      displayValue += keyBordValue;
-      ref.displayBtn.textContent = displayValue;
-      break;
-    }
-    case "Digit9": {
-      keyBordValue = "9";
-      displayValue += keyBordValue;
-      ref.displayBtn.textContent = displayValue;
-      break;
-    }
-    case "Digit0": {
-      keyBordValue = "0";
-      displayValue += keyBordValue;
-      ref.displayBtn.textContent = displayValue;
+      keyBordValue = event.shiftKey ? "*" : "8";
+      if (!event.shiftKey) {
+        displayValue += keyBordValue;
+        ref.displayBtn.textContent = displayValue;
+      }
       break;
     }
   }
 }
+
 function inputDecimal() {
   ref.decimalBtn.disabled = true;
   ref.decimalBtn.classList.add("disabled-hover");
@@ -225,4 +188,26 @@ function backspaceBtnControl(event) {
 function keyboardControl(event) {
   onKeyBoardPress(event);
   backspaceBtnControl(event);
+  operatorsKeyBoardSupport(event);
+}
+
+function operatorsKeyBoardSupport(event) {
+  if (event.key === "-" || event.key === "/") {
+    handleOperation(event.key);
+  }
+
+  if (event.code === "ShiftLeft" || event.code === "ShiftRight") {
+    document.addEventListener("keydown", function (innerEvent) {
+      if (innerEvent.code === "Digit8" && innerEvent.shiftKey) {
+        handleOperation("*");
+      }
+      if (innerEvent.code === "Equal" && innerEvent.shiftKey) {
+        handleOperation("+");
+      }
+    });
+  }
+
+  if (event.code === "Enter") {
+    handleEqual();
+  }
 }
