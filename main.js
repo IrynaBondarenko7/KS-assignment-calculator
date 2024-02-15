@@ -12,7 +12,7 @@ function multiply(num1, num2) {
 }
 function divide(num1, num2) {
   if (num2 === 0) {
-    return "Error";
+    return "It is 2024 and we still cannot devide by 0";
   }
   return num1 / num2;
 }
@@ -31,12 +31,47 @@ const ref = {
 };
 
 let displayValue = ""; //string
+let privousValue=null;
+let currentValue=null;
+let operationValue="";
 
 ref.buttons.addEventListener("click", showOnDisplay);
 ref.deleteBtn.addEventListener("click", deleteLastNumber);
 ref.decimalBtn.addEventListener("click", inputDecimal);
 document.addEventListener("keydown", keyboardControl);
 ref.clearBtn.addEventListener("click", clearDisplay);
+
+function handleOperation (operator) {
+ 
+  
+  if (["+", "-", "*", "/"].includes(displayValue.slice(-1))) {
+    return
+  }
+  handleEqual();
+  operationValue = operator;
+  privousValue= parseFloat(displayValue);
+  updateValue(operator);
+}
+
+function handleEqual () {
+
+    
+
+// Extracting the currentNumber from Display value
+    let parts = displayValue.split(operationValue);
+    let currentValue = parseFloat(parts[1]);
+  
+  if (privousValue===null) {
+    return
+  } else if (currentValue===null) {
+    return 
+  } else if (operationValue==="") {
+    return 
+  } else {
+    displayValue = operate(operationValue, privousValue, currentValue);
+    ref.displayBtn.textContent = displayValue;
+  }
+}
 
 // Function to perform operation based on operator and two numbers
 function operate(operator, num1, num2) {
@@ -54,27 +89,49 @@ function operate(operator, num1, num2) {
   }
 }
 
+function updateValue (value) {
+  displayValue += value;
+  ref.displayBtn.textContent = displayValue;
+}
+
 function showOnDisplay(event) {
-  if (event.target.nodeName !== "BUTTON") return;
+   if (displayValue.length >= 22) return;
+  // console.log(event.target.value);
+  // if (event.target.nodeName !== "BUTTON") return;
 
   const buttonValue = event.target.value;
+  
+  if (["+", "-", "*", "/"].includes(buttonValue)) {
+    
+    handleOperation(buttonValue)
+    return;
+  }
 
-  if (
-    buttonValue === "-" ||
-    buttonValue === "+" ||
-    buttonValue === "/" ||
-    buttonValue === "*" ||
-    buttonValue === "=" ||
-    event.target.innerText === "AC" ||
-    event.target.innerText === "DEL"
-  ) {
+ if (buttonValue === "=") {
+    
+    handleEqual();
     return;
   }
-  if (displayValue.length >= 22) {
+ 
+   if (buttonValue === ".") {
+    
     return;
   }
-  displayValue += buttonValue;
-  ref.displayBtn.textContent = displayValue;
+
+  updateValue (buttonValue);
+  // if (
+  //   buttonValue === "-" ||
+  //   buttonValue === "+" ||
+  //   buttonValue === "/" ||
+  //   buttonValue === "*" ||
+  //   buttonValue === "=" ||
+  //   event.target.innerText === "AC" ||
+  //   event.target.innerText === "DEL"
+  // ) {
+  //   return;
+  // }
+  
+  
 }
 
 function onKeyBoardPress(event) {
