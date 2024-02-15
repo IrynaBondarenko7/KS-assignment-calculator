@@ -31,9 +31,9 @@ const ref = {
 };
 
 let displayValue = ""; //string
-let privousValue=null;
-let currentValue=null;
-let operationValue="";
+let privousValue = null;
+let currentValue = null;
+let operationValue = "";
 
 ref.buttons.addEventListener("click", showOnDisplay);
 ref.deleteBtn.addEventListener("click", deleteLastNumber);
@@ -41,38 +41,35 @@ ref.decimalBtn.addEventListener("click", inputDecimal);
 document.addEventListener("keydown", keyboardControl);
 ref.clearBtn.addEventListener("click", clearDisplay);
 
-function handleOperation (operator) {
- 
-  
-  if (["+", "-", "*", "/"].includes(displayValue.slice(-1))||displayValue==="") {
+function handleOperation(operator) {
+  if (
+    ["+", "-", "*", "/"].includes(displayValue.slice(-1)) ||
+    displayValue === ""
+  ) {
     return;
   }
-  console.log("About to handle Equal")
   handleEqual();
   operationValue = operator;
-  privousValue= parseFloat(displayValue);
+  privousValue = parseFloat(displayValue);
   updateValue(operator);
 }
 
-function handleEqual () {
+function handleEqual() {
+  // Extracting the currentNumber from Display value
+  let parts = displayValue.split(operationValue);
+  let currentValue = parseFloat(parts[1]);
 
-    
-
-// Extracting the currentNumber from Display value
-    let parts = displayValue.split(operationValue);
-    let currentValue = parseFloat(parts[1]);
-  
   if (isNaN(privousValue)) {
-    return
+    return;
   } else if (isNaN(currentValue)) {
-    return 
-  } else if (operationValue==="") {
-    return 
+    return;
+  } else if (operationValue === "") {
+    return;
   } else {
     let result = operate(operationValue, privousValue, currentValue);
-   
+
     displayValue = result.toString();
-    
+
     ref.displayBtn.textContent = displayValue;
   }
 }
@@ -93,33 +90,33 @@ function operate(operator, num1, num2) {
   }
 }
 
-function updateValue (value) {
+function updateValue(value) {
   displayValue += value;
   ref.displayBtn.textContent = displayValue;
 }
 
 function showOnDisplay(event) {
-   if (displayValue.length >= 22) return;
-  // console.log(event.target.value);
-  // if (event.target.nodeName !== "BUTTON") return;
+  if (displayValue.length >= 22) return;
+
+  if (event.target.nodeName !== "BUTTON") return;
 
   const buttonValue = event.target.value;
-  
-  if (["+", "-", "*", "/"].includes(buttonValue)) {
-    
-    handleOperation(buttonValue)
+
+  if (event.target.innerText === "AC" || event.target.innerText === "DEL") {
     return;
   }
 
- if (buttonValue === "=") {
+  if (["+", "-", "*", "/"].includes(buttonValue)) {
+    handleOperation(buttonValue);
+    return;
+  }
+
+  if (buttonValue === "=") {
     handleEqual();
     return;
   }
-   if (buttonValue === ".") {
-    
-    return;
-  }
-  updateValue (buttonValue);
+
+  updateValue(buttonValue);
 }
 
 function onKeyBoardPress(event) {
@@ -214,8 +211,8 @@ function clearDisplay() {
   ref.displayBtn.textContent = "0";
   ref.decimalBtn.disabled = false;
   ref.decimalBtn.classList.remove("disabled-hover");
-  privousValue=null;
-  currentValue=null;
+  privousValue = null;
+  currentValue = null;
 }
 
 function backspaceBtnControl(event) {
