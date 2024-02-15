@@ -44,9 +44,10 @@ ref.clearBtn.addEventListener("click", clearDisplay);
 function handleOperation (operator) {
  
   
-  if (["+", "-", "*", "/"].includes(displayValue.slice(-1))) {
-    return
+  if (["+", "-", "*", "/"].includes(displayValue.slice(-1))||displayValue==="") {
+    return;
   }
+  console.log("About to handle Equal")
   handleEqual();
   operationValue = operator;
   privousValue= parseFloat(displayValue);
@@ -61,14 +62,17 @@ function handleEqual () {
     let parts = displayValue.split(operationValue);
     let currentValue = parseFloat(parts[1]);
   
-  if (privousValue===null) {
+  if (isNaN(privousValue)) {
     return
-  } else if (currentValue===null) {
+  } else if (isNaN(currentValue)) {
     return 
   } else if (operationValue==="") {
     return 
   } else {
-    displayValue = operate(operationValue, privousValue, currentValue);
+    let result = operate(operationValue, privousValue, currentValue);
+   
+    displayValue = result.toString();
+    
     ref.displayBtn.textContent = displayValue;
   }
 }
@@ -108,30 +112,14 @@ function showOnDisplay(event) {
   }
 
  if (buttonValue === "=") {
-    
     handleEqual();
     return;
   }
- 
    if (buttonValue === ".") {
     
     return;
   }
-
   updateValue (buttonValue);
-  // if (
-  //   buttonValue === "-" ||
-  //   buttonValue === "+" ||
-  //   buttonValue === "/" ||
-  //   buttonValue === "*" ||
-  //   buttonValue === "=" ||
-  //   event.target.innerText === "AC" ||
-  //   event.target.innerText === "DEL"
-  // ) {
-  //   return;
-  // }
-  
-  
 }
 
 function onKeyBoardPress(event) {
@@ -213,7 +201,7 @@ function deleteLastNumber() {
   displayValue = displayValue.slice(0, -1);
   ref.displayBtn.textContent = displayValue;
   if (displayValue === "") {
-    ref.displayBtn.textContent = "0";
+    clearDisplay();
   }
   if (!displayValue.includes(".")) {
     ref.decimalBtn.disabled = false;
@@ -226,6 +214,8 @@ function clearDisplay() {
   ref.displayBtn.textContent = "0";
   ref.decimalBtn.disabled = false;
   ref.decimalBtn.classList.remove("disabled-hover");
+  privousValue=null;
+  currentValue=null;
 }
 
 function backspaceBtnControl(event) {
