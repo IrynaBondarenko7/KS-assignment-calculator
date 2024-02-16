@@ -108,11 +108,16 @@ function showOnDisplay(event) {
 
   if (["+", "-", "*", "/"].includes(buttonValue)) {
     handleOperation(buttonValue);
+    removeDecimalBtnDisabled();
     return;
+  }
+  if (buttonValue === "." && displayValue === "") {
+    displayValue = "0";
   }
 
   if (buttonValue === "=") {
     handleEqual();
+    removeDecimalBtnDisabled();
     return;
   }
 
@@ -155,6 +160,11 @@ function onKeyBoardPress(event) {
 function inputDecimal() {
   ref.decimalBtn.disabled = true;
   ref.decimalBtn.classList.add("disabled-hover");
+}
+
+function removeDecimalBtnDisabled() {
+  ref.decimalBtn.disabled = false;
+  ref.decimalBtn.classList.remove("disabled-hover");
 }
 
 function deleteLastNumber() {
@@ -209,5 +219,6 @@ function operatorsKeyBoardSupport(event) {
 
   if (event.code === "Enter") {
     handleEqual();
+    removeDecimalBtnDisabled();
   }
 }
