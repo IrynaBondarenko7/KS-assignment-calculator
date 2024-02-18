@@ -91,6 +91,18 @@ function operate(operator, num1, num2) {
 }
 
 function updateValue(value) {
+  if (
+    (
+      ["+", "-", "*", "/"].includes(displayValue.slice(-1)) 
+    || 
+      displayValue.includes(".") 
+    )
+    && 
+      value === "."
+  ) {
+    return;
+  }
+
   displayValue += value;
   ref.displayBtn.textContent = displayValue;
 }
