@@ -28,6 +28,7 @@ const ref = {
   multiplyBtn: document.querySelector("#multiply"),
   buttons: document.querySelector("#buttons"),
   decimalBtn: document.querySelector("#decimal"),
+  zeroBtn: document.querySelector("#zero"),
 };
 
 let displayValue = "";
@@ -68,8 +69,7 @@ function handleEqual() {
   } else {
     let result = operate(operationValue, privousValue, currentValue);
 
-    displayValue = result.toString();
-
+    displayValue = result.toFixed(5).toString();
     ref.displayBtn.textContent = displayValue;
   }
 }
@@ -91,16 +91,26 @@ function operate(operator, num1, num2) {
 }
 
 function updateValue(value) {
+  let splitValue = displayValue.split(/[\+\-\*\/]/);
+
   if (
-    (
-      ["+", "-", "*", "/"].includes(displayValue.slice(-1)) 
-    || 
-      displayValue.includes(".") 
-    )
-    && 
-      value === "."
+    (["+", "-", "*", "/"].includes(displayValue.slice(-1)) ||
+      displayValue.includes(".")) &&
+    value === "."
   ) {
-    return;
+    if (splitValue[1] === "") {
+      value = "0.";
+    }
+  }
+
+  if (
+    (["+", "-", "*", "/"].includes(displayValue.slice(-1)) ||
+      displayValue.includes("0")) &&
+    value === "0"
+  ) {
+    if (splitValue[1] === "") {
+      ref.zeroBtn.disabled = true;
+    }
   }
 
   displayValue += value;
@@ -177,6 +187,7 @@ function onKeyBoardPress(event) {
 function inputDecimal() {
   ref.decimalBtn.disabled = true;
   ref.decimalBtn.classList.add("disabled-hover");
+  ref.zeroBtn.disabled = false;
 }
 
 function removeDecimalBtnDisabled() {
