@@ -111,8 +111,13 @@ function showOnDisplay(event) {
     removeDecimalBtnDisabled();
     return;
   }
+
   if (buttonValue === "." && displayValue === "") {
     displayValue = "0";
+  }
+
+  if (buttonValue === "0" && displayValue === "") {
+    return;
   }
 
   if (buttonValue === "=") {
