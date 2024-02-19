@@ -34,7 +34,7 @@ const ref = {
 let displayValue = "";
 let privousValue = null;
 let currentValue = null;
-let operationValue = "";
+let operationValue = null;
 
 ref.buttons.addEventListener("click", showOnDisplay);
 ref.deleteBtn.addEventListener("click", deleteLastNumber);
@@ -55,23 +55,37 @@ function handleOperation(operator) {
   updateValue(operator);
 }
 
-function handleEqual() {
-  // Extracting the currentNumber from Display value
+// function handleEqual() {
+//   // Extracting the currentNumber from Display value
+//   let parts = displayValue.split(operationValue);
+//   let currentValue = parseFloat(parts[1]);
+
+//   if (isNaN(privousValue)) {
+//     return;
+//   } else if (isNaN(currentValue)) {
+//     return;
+//   } else if (operationValue === "") {
+//     return;
+//   } else {
+//     let result = operate(operationValue, privousValue, currentValue);
+
+//     displayValue = result.toFixed(5).toString();
+//     ref.displayBtn.textContent = displayValue;
+//   }
+// }
+function handleEqual(){
   let parts = displayValue.split(operationValue);
   let currentValue = parseFloat(parts[1]);
-
-  if (isNaN(privousValue)) {
+  if(isNaN(privousValue)|| isNaN(currentValue) || operationValue === ""){
     return;
-  } else if (isNaN(currentValue)) {
-    return;
-  } else if (operationValue === "") {
-    return;
-  } else {
-    let result = operate(operationValue, privousValue, currentValue);
-
-    displayValue = result.toFixed(5).toString();
-    ref.displayBtn.textContent = displayValue;
   }
+  let result = operate(operationValue,privousValue,currentValue);
+  if(Number.isInteger(result)){
+    displayValue = result.toString();
+  }else{
+    displayValue = Math.ceil(result *10000)/10000
+  }
+  ref.displayBtn.textContent = displayValue;
 }
 
 // Function to perform operation based on operator and two numbers
