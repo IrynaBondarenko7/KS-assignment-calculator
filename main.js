@@ -69,7 +69,9 @@ function handleEqual() {
   } else {
     let result = operate(operationValue, privousValue, currentValue);
 
-    if (displayValue.includes(".")) {
+    let splitNumber = result.toString().split(".");
+
+    if (displayValue.includes(".") && splitNumber[1].length > 6) {
       displayValue = result.toFixed(5).toString();
     } else {
       displayValue = result.toString();
