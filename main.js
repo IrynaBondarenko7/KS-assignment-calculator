@@ -80,10 +80,14 @@ function handleEqual(){
     return;
   }
   let result = operate(operationValue,privousValue,currentValue);
-  if(Number.isInteger(result)){
+  if(typeof result === 'number'){
+   if(Number.isInteger(result)){
     displayValue = result.toString();
-  }else{
-    displayValue = Math.ceil(result *10000)/10000
+  } else {
+    displayValue = Math.ceil(result * 10000) / 10000;
+  }
+  } else {
+  displayValue = result;
   }
   ref.displayBtn.textContent = displayValue;
 }
@@ -123,7 +127,7 @@ function updateValue(value) {
     value === "0"
   ) {
     if (splitValue[1] === "") {
-      ref.zeroBtn.disabled = true;
+      ref.zeroBtn.disabled = false;
     }
   }
 
