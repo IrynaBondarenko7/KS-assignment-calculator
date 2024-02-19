@@ -55,41 +55,28 @@ function handleOperation(operator) {
   updateValue(operator);
 }
 
-// function handleEqual() {
-//   // Extracting the currentNumber from Display value
-//   let parts = displayValue.split(operationValue);
-//   let currentValue = parseFloat(parts[1]);
-
-//   if (isNaN(privousValue)) {
-//     return;
-//   } else if (isNaN(currentValue)) {
-//     return;
-//   } else if (operationValue === "") {
-//     return;
-//   } else {
-//     let result = operate(operationValue, privousValue, currentValue);
-
-//     displayValue = result.toFixed(5).toString();
-//     ref.displayBtn.textContent = displayValue;
-//   }
-// }
-function handleEqual(){
+function handleEqual() {
+  // Extracting the currentNumber from Display value
   let parts = displayValue.split(operationValue);
   let currentValue = parseFloat(parts[1]);
-  if(isNaN(privousValue)|| isNaN(currentValue) || operationValue === ""){
+
+  if (isNaN(privousValue)) {
     return;
-  }
-  let result = operate(operationValue,privousValue,currentValue);
-  if(typeof result === 'number'){
-   if(Number.isInteger(result)){
-    displayValue = result.toString();
+  } else if (isNaN(currentValue)) {
+    return;
+  } else if (operationValue === "") {
+    return;
   } else {
-    displayValue = Math.ceil(result * 10000) / 10000;
+    let result = operate(operationValue, privousValue, currentValue);
+
+    if (displayValue.includes(".")) {
+      displayValue = result.toFixed(5).toString();
+    } else {
+      displayValue = result.toString();
+    }
+
+    ref.displayBtn.textContent = displayValue;
   }
-  } else {
-  displayValue = result;
-  }
-  ref.displayBtn.textContent = displayValue;
 }
 
 // Function to perform operation based on operator and two numbers
@@ -127,7 +114,7 @@ function updateValue(value) {
     value === "0"
   ) {
     if (splitValue[1] === "") {
-      ref.zeroBtn.disabled = false;
+      ref.zeroBtn.disabled = true;
     }
   }
 
@@ -232,6 +219,7 @@ function clearDisplay() {
   ref.decimalBtn.classList.remove("disabled-hover");
   privousValue = null;
   currentValue = null;
+  ref.zeroBtn.disabled = false;
 }
 
 function backspaceBtnControl(event) {
